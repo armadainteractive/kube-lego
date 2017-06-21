@@ -7,7 +7,7 @@ GO_VERSION=1.8
 GOOS := linux
 GOARCH := amd64
 
-DOCKER_IMAGE=${ACCOUNT}/${APP_NAME}
+DOCKER_IMAGE=armadainteractive/${APP_NAME}
 
 BUILD_DIR=_build
 TEST_DIR=_test
@@ -15,7 +15,9 @@ TEST_DIR=_test
 CONTAINER_DIR=/go/src/${PACKAGE_NAME}
 
 BUILD_TAG := build
-IMAGE_TAGS := canary
+IMAGE_TAGS := 0.1.4-poll-hotfix
+IMAGE_REGISTRY := us.gcr.io/armada-ts
+
 
 PACKAGES=$(shell find . -name "*_test.go" | xargs -n1 dirname | grep -v 'vendor/' | sort -u | xargs -n1 printf "%s.test_pkg ")
 
@@ -91,8 +93,8 @@ image: docker_all version
 push: image
 	set -e; \
 	for tag in $(IMAGE_TAGS); do \
-		docker tag  $(DOCKER_IMAGE):$(BUILD_TAG) $(DOCKER_IMAGE):$${tag} ; \
-		docker push $(DOCKER_IMAGE):$${tag}; \
+		docker tag  $(DOCKER_IMAGE):$(BUILD_TAG) $(IMAGE_REGISTRY)/$(DOCKER_IMAGE):$${tag} ; \
+		docker push $(IMAGE_REGISTRY)/$(DOCKER_IMAGE):$${tag}; \
 	done
 
 release:
