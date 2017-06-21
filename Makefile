@@ -15,7 +15,7 @@ TEST_DIR=_test
 CONTAINER_DIR=/go/src/${PACKAGE_NAME}
 
 BUILD_TAG := build
-IMAGE_TAGS := 0.1.4-poll-hotfix
+IMAGE_TAGS := canary
 IMAGE_REGISTRY := us.gcr.io/armada-ts
 
 
